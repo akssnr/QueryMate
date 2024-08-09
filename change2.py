@@ -27,8 +27,8 @@ from store_selected_list import store_selected_list
 
 
 # Load Environment Variables
-from dotenv import load_dotenv
-load_dotenv()
+# from dotenv import load_dotenv
+# load_dotenv()
 
 # Initialize the OpenAI model
 llm = ChatOpenAI(model = "gpt-4o-mini")
