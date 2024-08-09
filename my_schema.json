@@ -1,0 +1,43 @@
+{
+    "class": "QueryMate",
+    "properties": [
+        {
+            "name": "Sector",
+            "dataType": ["text"]
+        },
+        {
+            "name": "Sub Sector",
+            "dataType": ["text"]
+        },
+        {
+            "name": "Sales Person",
+            "dataType": ["text"]
+        },
+        {
+            "name": "Sheet Name",
+            "dataType": ["text"]
+        },
+        {
+            "name" : "Table Name",
+            "dataType" : ["text"]
+        },
+        {
+            "name": "Values Table",
+            "dataType": ["text"]
+        },
+        {
+            "name" : "PDF Data",
+            "data" : ["text"]
+        }
+    ],
+
+    "vectorizer": "text2vec-openai",
+
+    "moduleConfig": {
+        "text2vec-openai": {
+            "vectorizeClassName": false,
+            "model": "text-embedding-3-small",
+            "type": "text"
+        }
+    }
+}

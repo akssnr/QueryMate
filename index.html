@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QueryMate</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .form-group button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Page</h1>
+        <form id="admin-form">
+            <div class="form-group">
+                <label for="sector">Sector</label>
+                <input type="text" id="sector" name="sector" required>
+            </div>
+            <div class="form-group">
+                <label for="sub_sector">Sub Sector</label>
+                <input type="text" id="sub_sector" name="sub_sector" required>
+            </div>
+            <div class="form-group">
+                <label for="sales_person">Sales Person</label>
+                <input type="text" id="sales_person" name="sales_person" required>
+            </div>
+            <div class="form-group">
+                <label for="uploaded_file_excel">Upload Excel</label>
+                <input type="file" id="uploaded_file_excel" name="uploaded_file_excel" accept=".xlsx, .xls" required>
+            </div>
+            <div class="form-group">
+                <label for="uploaded_file_pdf">Upload PDF</label>
+                <input type="file" id="uploaded_file_pdf" name="uploaded_file_pdf" accept=".pdf" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">Load Excel and PDF File</button>
+            </div>
+        </form>
+
+        <h1>User Page</h1>
+        <form id="user-form">
+            <div class="form-group">
+                <label for="question">Ask a Question</label>
+                <input type="text" id="question" name="question" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">Get Answer</button>
+            </div>
+        </form>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('admin-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const formData = new FormData();
+            formData.append('sector', document.getElementById('sector').value);
+            formData.append('sub_sector', document.getElementById('sub_sector').value);
+            formData.append('sales_person', document.getElementById('sales_person').value);
+            formData.append('uploaded_file_excel', document.getElementById('uploaded_file_excel').files[0]);
+            formData.append('uploaded_file_pdf', document.getElementById('uploaded_file_pdf').files[0]);
+
+            try {
+                const response = await fetch('http://localhost:8000/admin', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                alert(result.message || result.error);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+
+        document.getElementById('user-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const question = document.getElementById('question').value;
+
+            try {
+                const response = await fetch(`http://localhost:8000/user?question=${encodeURIComponent(question)}`);
+                const result = await response.json();
+                document.getElementById('result').innerText = result.answer || result.error;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>

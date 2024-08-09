@@ -1,0 +1,14 @@
+pandas
+numpy
+weaviate-client
+langchain
+langchain-community
+langchain-weaviate
+langchain_openai
+streamlit
+tiktoken
+python-dotenv
+openpyxl
+pypdf
+fastapi
+-e.
